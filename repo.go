@@ -1,29 +1,32 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/alexdevid/go-hello-rest/models"
+)
 
 var currentId int
 
-var todos Todos
+var todos models.Todos
 
 // Give us some seed data
 func init() {
-	RepoCreateTodo(Todo{Name: "Write presentation"})
-	RepoCreateTodo(Todo{Name: "Host meetup"})
+	RepoCreateTodo(models.Todo{Name: "Write presentation"})
+	RepoCreateTodo(models.Todo{Name: "Host meetup"})
 }
 
-func RepoFindTodo(id int) Todo {
+func RepoFindTodo(id int) models.Todo {
 	for _, t := range todos {
 		if t.Id == id {
 			return t
 		}
 	}
 	// return empty Todo if not found
-	return Todo{}
+	return models.Todo{}
 }
 
 //this is bad, I don't think it passes race condtions
-func RepoCreateTodo(t Todo) Todo {
+func RepoCreateTodo(t models.Todo) models.Todo {
 	currentId += 1
 	t.Id = currentId
 	todos = append(todos, t)

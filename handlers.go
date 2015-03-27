@@ -13,7 +13,7 @@ import (
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	p := models.Page{Title: "GO SERVER", Body: "GO WEB SERVER"}
+	p := models.Page{Title: "GO SERVER", Body: "Go test web server"}
 	t, _ := template.ParseFiles("templates/welcome.html", "templates/footer.html")
 	t.Execute(w, p)
 }
@@ -58,7 +58,7 @@ curl -H "Content-Type: application/json" -d '{"name":"New Todo"}' http://localho
 
 */
 func TodoCreate(w http.ResponseWriter, r *http.Request) {
-	var todo Todo
+	var todo models.Todo
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
 		panic(err)

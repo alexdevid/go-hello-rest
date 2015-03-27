@@ -1,4 +1,4 @@
-package application
+package database
 
 import (
 	"fmt"
@@ -7,16 +7,16 @@ import (
 
 var currentId int
 
-var todos models.Todos
+var TodoList models.Todos
 
 // Give us some seed data
 func init() {
-	RepoCreateTodo(models.Todo{Name: "Write presentation"})
-	RepoCreateTodo(models.Todo{Name: "Host meetup"})
+	Create(models.Todo{Name: "Write presentation"})
+	Create(models.Todo{Name: "Host meetup"})
 }
 
-func RepoFindTodo(id int) models.Todo {
-	for _, t := range todos {
+func Find(id int) models.Todo {
+	for _, t := range TodoList {
 		if t.Id == id {
 			return t
 		}
@@ -26,17 +26,17 @@ func RepoFindTodo(id int) models.Todo {
 }
 
 //this is bad, I don't think it passes race condtions
-func RepoCreateTodo(t models.Todo) models.Todo {
+func Create(t models.Todo) models.Todo {
 	currentId += 1
 	t.Id = currentId
-	todos = append(todos, t)
+	TodoList = append(TodoList, t)
 	return t
 }
 
-func RepoDestroyTodo(id int) error {
-	for i, t := range todos {
+func Destroy(id int) error {
+	for i, t := range TodoList {
 		if t.Id == id {
-			todos = append(todos[:i], todos[i+1:]...)
+			TodoList = append(TodoList[:i], TodoList[i+1:]...)
 			return nil
 		}
 	}

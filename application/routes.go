@@ -1,6 +1,8 @@
 package application
 
-import "net/http"
+import (
+	"net/http"
+)
 
 type Route struct {
 	Name        string
@@ -21,19 +23,19 @@ var routes = Routes{
 	Route{
 		"TodoIndex",
 		"GET",
-		"/todos",
+		"/api/todos",
 		TodoIndex,
 	},
 	Route{
 		"TodoCreate",
 		"POST",
-		"/todos",
+		"/api/todos",
 		TodoCreate,
 	},
 	Route{
 		"TodoShow",
 		"GET",
-		"/todos/{todoId}",
+		"/api/todos/{todoId}",
 		TodoShow,
 	},
 }

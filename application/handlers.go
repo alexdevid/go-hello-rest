@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/alexdevid/go-hello-rest/database"
 	"github.com/alexdevid/go-hello-rest/models"
 	"github.com/gorilla/mux"
 )
@@ -21,7 +22,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 func TodoIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(todos); err != nil {
+	if err := json.NewEncoder(w).Encode(database.TodoList); err != nil {
 		panic(err)
 	}
 }
@@ -33,7 +34,7 @@ func TodoShow(w http.ResponseWriter, r *http.Request) {
 	if todoId, err = strconv.Atoi(vars["todoId"]); err != nil {
 		panic(err)
 	}
-	todo := RepoFindTodo(todoId)
+	todo := database.Find(todoId)
 	if todo.Id > 0 {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusOK)
@@ -74,7 +75,7 @@ func TodoCreate(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	t := RepoCreateTodo(todo)
+	t := database.Create(todo)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)
 	if err := json.NewEncoder(w).Encode(t); err != nil {

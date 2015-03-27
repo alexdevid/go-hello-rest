@@ -2,17 +2,20 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	"html/template"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 
+	"github.com/alexdevid/go-hello/models"
 	"github.com/gorilla/mux"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Welcome!\n")
+	p := models.Page{Title: "GO SERVER", Body: "GO WEB SERVER"}
+	t, _ := template.ParseFiles("templates/welcome.html", "templates/footer.html")
+	t.Execute(w, p)
 }
 
 func TodoIndex(w http.ResponseWriter, r *http.Request) {

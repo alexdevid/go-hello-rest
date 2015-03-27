@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/alexdevid/go-hello/models"
+	"github.com/alexdevid/go-hello-rest/models"
 	"github.com/gorilla/mux"
 )
 

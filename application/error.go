@@ -1,4 +1,4 @@
-package main
+package application
 
 type jsonErr struct {
 	Code int    `json:"code"`
